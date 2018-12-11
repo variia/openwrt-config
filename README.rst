@@ -72,10 +72,12 @@ a reboot. If you need it, you will have to re-enable and/or start it manually:
 ``2-openwrt-unbound.sh``
 ------------------------
 
-Installs CloudFare's DNS over TLS with Unbound.
+Installs CloudFare's DNS service over TLS with Unbound DNS server.
 
-**Note:** for sake of simplicity and compatibility, it is based on
-`serial dnsmasq <https://github.com/openwrt/packages/tree/master/net/unbound/files#serial-dnsmasq>`_ setup.
+**Note:**
+ * for sake of simplicity and compatibility, it is based on `serial dnsmasq <https://github.com/openwrt/packages/tree/master/net/unbound/files#serial-dnsmasq>`_ setup.
+ * firewall rule(s) are added to prevent network access. (``unbound`` should
+   only be a local upstream for ``dnsmasq``)
 
 ``3-openwrt-guest-lan.sh``
 --------------------------
