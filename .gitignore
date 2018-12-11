@@ -1,0 +1,26 @@
+# editor fragments
+*~
+*.swp
+*.swo
+# password file fragments
+*passwd*
+# OSX garbage
+.DS_Store
+._*
+# IDE, compiler fragments
+*.pyc
+.pydevproject
+.project
+.idea/
+.settings/
+# salt file server
+*.rpm
+*.tgz
+*.tar.gz
+*.bin
+*.zip
+# testing fragments
+.template/
+.kitchen/
+.ruby-version
+Gemfile.lock
