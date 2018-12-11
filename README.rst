@@ -57,12 +57,12 @@ Available scripts
 Base or inital config, should be executed straight after install or upgrade.
 
 **Note:**
- * This will istall ``luci-ssl`` and disable standard HTTP service. Access the
-   router GUI always with ``https://x.x.x.x``
+ * This will install ``luci-ssl`` and removes the standard HTTP service completely.
+   Access the router GUI always with ``https://x.x.x.x``
 
-**TODO**:
-This will disable the ``luci`` **Web-UI** by default and it won't start after
-a reboot. If you need it, you will have to re-enable and/or start it manually:
+ * For additional safety, the ``luci-ssl`` **Web-UI** will be disabled by default,
+   it won't even start after reboot. If you need it, you will have to re-enable
+   and/or start it manually:
 
 .. code::
 
@@ -75,8 +75,8 @@ Installs CloudFare's DNS service over TLS with Unbound DNS server.
 
 **Note:**
  * for sake of simplicity and compatibility, it is based on `serial dnsmasq <https://github.com/openwrt/packages/tree/master/net/unbound/files#serial-dnsmasq>`_ setup.
- * firewall rule(s) are added to prevent network access. (``unbound`` should
-   only be a local upstream for ``dnsmasq``)
+ * firewall rule(s) are added to prevent network access as ``unbound`` should
+   only be a forwarding upstream for ``dnsmasq``.
 
 ``3-openwrt-guest-lan.sh``
 --------------------------
