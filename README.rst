@@ -7,7 +7,6 @@ scripts.
 
 Features
 ========
-* ordered shell wrapper scripts that are not executable for safety
 * hardened settings for additional security
 * Privacy focused DNS from `CloudFare <https://blog.cloudflare.com/dns-over-tls-for-openwrt>`_
 * Isolated Guest Wi-Fi LAN with `OpenDNS FamilyShield <https://support.opendns.com/hc/en-us/articles/228006487-FamilyShield-Router-Configuration-Instructions>`_
