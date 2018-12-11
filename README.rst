@@ -57,6 +57,10 @@ Available scripts
 
 Base or inital config, should be executed straight after install or upgrade.
 
+**Note:**
+* This will istall ``luci-ssl`` and disable standard HTTP service. Access the
+router GUI always with ``https://x.x.x.x``
+
 **TODO**:
 This will disable the ``luci`` **Web-UI** by default and it won't start after
 a reboot. If you need it, you will have to re-enable and/or start it manually:
