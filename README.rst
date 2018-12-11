@@ -57,6 +57,14 @@ Available scripts
 
 Base or inital config, should be executed straight after install or upgrade.
 
+**TODO**:
+This will disable the ``luci`` **Web-UI** by default and it won't start after
+a reboot. If you need it, you will have to re-enable and/or start it manually:
+
+.. code::
+
+    # cd /etc/init.d && ./uhttpd enable && ./uhttpd restart
+
 ``2-openwrt-unbound.sh``
 ------------------------
 
@@ -133,7 +141,7 @@ you will have to edit the script prior execution and fill the following variable
 ``5-openwrt-opendns.sh``
 ------------------------
 
-Installs OpenDNS DDNS service to update the IP address for the given network (service) label.
+Installs OpenDNS DDNS service to update the IP address for the given (service) network label.
 
 **TODO**:
 you will have to edit the script prior execution and fill the following variables accordingly:
