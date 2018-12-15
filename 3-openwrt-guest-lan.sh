@@ -1,9 +1,9 @@
 # https://openwrt.org/docs/guide-user/network/wifi/guestwifi/configuration
 # https://openwrt.org/docs/guide-user/network/wifi/guestwifi/guest-wlan
 
-# free service to block adult sites
-ODNS_FAMILYSHIELD1="208.67.222.123"
-ODNS_FAMILYSHIELD2="208.67.220.123"
+# free service from Google
+DNS1="8.8.4.4"
+DNS2="8.8.8.8"
 
 # guest zone
 NETWORKID=guest
@@ -32,12 +32,12 @@ uci batch <<EOF
   set dhcp.${NETWORKID}=dhcp
   set dhcp.${NETWORKID}.interface=${NETWORKID}
   set dhcp.${NETWORKID}.start=100
-  set dhcp.${NETWORKID}.leasetime=2h
   set dhcp.${NETWORKID}.limit=150
+  set dhcp.${NETWORKID}.leasetime=2h
   set dhcp.${NETWORKID}.dhcpv6=server
   set dhcp.${NETWORKID}.ra=server
-  add_list dhcp.${NETWORKID}.dhcp_option="6,${ODNS_FAMILYSHIELD1}"
-  add_list dhcp.${NETWORKID}.dhcp_option="6,${ODNS_FAMILYSHIELD2}"
+  add_list dhcp.${NETWORKID}.dhcp_option="6,${DNS1}"
+  add_list dhcp.${NETWORKID}.dhcp_option="6,${DNS2}"
 
   delete firewall.${FIREWALLZONE}
 
@@ -96,22 +96,22 @@ uci batch <<EOF
   delete firewall.${FIREWALLZONE}_odns1
 
   set firewall.${FIREWALLZONE}_odns1=rule
-  set firewall.${FIREWALLZONE}_odns1.name=Allow-${NETWORKID}-OpenDNS-FamilyShield-1
+  set firewall.${FIREWALLZONE}_odns1.name=Allow-${NETWORKID}-DNS-1
   set firewall.${FIREWALLZONE}_odns1.proto='tcpudp'
   set firewall.${FIREWALLZONE}_odns1.src=${NETWORKID}
   set firewall.${FIREWALLZONE}_odns1.dest=wan
-  set firewall.${FIREWALLZONE}_odns1.dest_ip=${ODNS_FAMILYSHIELD1}
+  set firewall.${FIREWALLZONE}_odns1.dest_ip=${DNS1}
   set firewall.${FIREWALLZONE}_odns1.dest_port=53
   set firewall.${FIREWALLZONE}_odns1.target=ACCEPT
 
   delete firewall.${FIREWALLZONE}_odns2
 
   set firewall.${FIREWALLZONE}_odns2=rule
-  set firewall.${FIREWALLZONE}_odns2.name=Allow-${NETWORKID}-OpenDNS-FamilyShield-2
+  set firewall.${FIREWALLZONE}_odns2.name=Allow-${NETWORKID}-DNS-2
   set firewall.${FIREWALLZONE}_odns2.proto='tcpudp'
   set firewall.${FIREWALLZONE}_odns2.src=${NETWORKID}
   set firewall.${FIREWALLZONE}_odns2.dest=wan
-  set firewall.${FIREWALLZONE}_odns2.dest_ip=${ODNS_FAMILYSHIELD2}
+  set firewall.${FIREWALLZONE}_odns2.dest_ip=${DNS2}
   set firewall.${FIREWALLZONE}_odns2.dest_port=53
   set firewall.${FIREWALLZONE}_odns2.target=ACCEPT
 
@@ -122,7 +122,7 @@ uci batch <<EOF
   set firewall.${FIREWALLZONE}_fwd_out.proto='tcpudp'
   set firewall.${FIREWALLZONE}_fwd_out.src=${NETWORKID}
   set firewall.${FIREWALLZONE}_fwd_out.dest=wan
-  set firewall.${FIREWALLZONE}_fwd_out.dest_port=${PORTS}
+  set firewall.${FIREWALLZONE}_fwd_out.dest_port="${PORTS}"
   set firewall.${FIREWALLZONE}_fwd_out.target=ACCEPT
 
   delete firewall.${FIREWALLZONE}_in_any
