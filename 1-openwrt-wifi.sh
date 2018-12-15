@@ -28,7 +28,6 @@ uci batch <<EOF
   set wireless.radio0.ff='1'
   set wireless.radio0.compression='1'
   set wireless.radio0.noscan='1'
-  set wireless.radio0.turbo='1'
   set wireless.radio0.hwmode=${HWMODE50}
   set wireless.radio0.htmode=${HTMODE50}
   set wireless.radio0.txpower='20'
@@ -40,7 +39,6 @@ uci batch <<EOF
   set wireless.radio1.ff='1'
   set wireless.radio1.compression='1'
   set wireless.radio1.noscan='1'
-  set wireless.radio1.turbo='1'
   set wireless.radio1.hwmode=${HWMODE24}
   set wireless.radio1.htmode=${HTMODE24}
   set wireless.radio1.txpower='20'
