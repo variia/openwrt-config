@@ -28,40 +28,21 @@ forward-zone:
 EOF
 
 uci batch <<EOF
-  delete unbound.@unbound[0]
-
-  add unbound unbound
-
   set unbound.@unbound[0].add_local_fqdn='0'
   set unbound.@unbound[0].add_wan_fqdn='0'
   set unbound.@unbound[0].dhcp_link='none'
-  set unbound.@unbound[0].dhcp4_slaac6='0'
-  set unbound.@unbound[0].dns64='0'
   set unbound.@unbound[0].domain='lan'
   set unbound.@unbound[0].domain_type='refuse'
-  set unbound.@unbound[0].edns_size='1280'
-  set unbound.@unbound[0].hide_binddata='1'
   set unbound.@unbound[0].listen_port=${UNBOUND_PORT}
-  set unbound.@unbound[0].localservice='1'
-  set unbound.@unbound[0].manual_conf='0'
-  set unbound.@unbound[0].protocol='mixed'
-  set unbound.@unbound[0].query_minimize='0'
-  set unbound.@unbound[0].rebind_localhost='0'
   set unbound.@unbound[0].rebind_protection='1'
-  set unbound.@unbound[0].recursion='passive'
-  set unbound.@unbound[0].resource='small'
-  set unbound.@unbound[0].root_age='9'
-  set unbound.@unbound[0].ttl_min='120'
-  set unbound.@unbound[0].unbound_control='0'
-  set unbound.@unbound[0].validator='0'
   set unbound.@unbound[0].enabled='1'
 
   delete firewall.${FIREWALLZONE}_unbound
 
   set firewall.${FIREWALLZONE}_unbound=rule
-  set firewall.${FIREWALLZONE}_unbound.name='Reject-${FIREWALLZONE}-Unbound-DNS'
+  set firewall.${FIREWALLZONE}_unbound.name='Reject-${NETWORKID}-Unbound-DNS'
   set firewall.${FIREWALLZONE}_unbound.proto='tcpudp'
-  set firewall.${FIREWALLZONE}_unbound.src=${FIREWALLZONE}
+  set firewall.${FIREWALLZONE}_unbound.src=${NETWORKID}
   set firewall.${FIREWALLZONE}_unbound.dest_port='${UNBOUND_PORT}'
   set firewall.${FIREWALLZONE}_unbound.target='REJECT'
 
@@ -69,4 +50,7 @@ uci batch <<EOF
   add_list dhcp.@dnsmasq[0].server='::1#${UNBOUND_PORT}'
 EOF
 
-uci commit && cd /etc/init.d && ./unbound enable && ./unbound restart && ./dnsmasq enable && ./dnsmasq restart && ./firewall reload
+uci commit && cd /etc/init.d && \
+./unbound enable && ./unbound restart && \
+./dnsmasq enable && ./dnsmasq restart && \
+./firewall reload
