@@ -2,14 +2,14 @@
 openwrt-config
 ==============
 
-My custom openwrt configuration.
+My custom OpenWrt configuration
 
 Features
 ========
-* hardened for additional security
+* Hardened for additional security
 * Privacy focused DNS from `CloudFare <https://blog.cloudflare.com/dns-over-tls-for-openwrt>`_
-* Isolated Guest Wi-Fi LAN with `OpenDNS FamilyShield <https://support.opendns.com/hc/en-us/articles/228006487-FamilyShield-Router-Configuration-Instructions>`_
-* Isolated Kids Wi-Fi LAN with parental control by `OpenDNS Home Free <https://www.opendns.com/home-internet-security/>`_ (account required)
+* Isolated Guest Wi-Fi LAN
+* Isolated Kids Wi-Fi LAN with parental control by OpenDNS (account required)
 * OpenDNS DDNS support for dynamic IPs
 
 Prerequisites
@@ -19,7 +19,7 @@ Prerequisites
 .. code:: yaml
 
     recommended:
-      - Linksys WRT1900AC
+      - Linksys WRT1900AC (tested)
       - Linksys WRT1900ACS
       - Linksys WRT3200ACM
 
@@ -28,7 +28,8 @@ Prerequisites
 .. code:: yaml
 
     tested:
-      - Reboot (17.01.4, r3560-79f57e422d)
+      - OpenWrt 18.06.1, r7258-5eb055306f
+      - LEDE Reboot 17.01.4, r3560-79f57e422d
 
 Note:
 =====
@@ -41,8 +42,8 @@ are discouraged, since it is not meant to be a collaboration project as of today
 Most of the config assumes fresh install or mostly system defaults. Running these
 over already customised systems may render your router unbootable, or inaccessible.
 
-DO NOT USE code from this repo without understanding it, I take NO RESPONSIBILITY
-for your loss, YOU HAVE BEEN WARNED!
+**DO NOT USE code from this repo without understanding it, I take NO RESPONSIBILITY
+for your loss, YOU HAVE BEEN WARNED!**
 
 You will be required to edit these files to suit your needs, firewall, network
 skills are essential.
@@ -59,21 +60,39 @@ The scripts are not executable on purpose, you can always pass them as shell arg
 
     # sh <scriptname>
 
+Some errors such as ``uci: Entry not found`` are expected. Examine config files
+after script run and ensure desired settings are in place for all affected services.
+
 Available scripts
 =================
 
 .. contents::
     :local:
 
-``1-openwrt-setup.sh``
+``0-openwrt-setup.sh``
 ----------------------
 
 Initial config, should be executed straight after install or upgrade.
 
-**Note:**
- * This installs ``luci-ssl`` and removes the standard HTTP service completely.
+**TODO**:
+Must fill the following variables:
 
- * For additional safety, the ``luci-ssl`` **Web-UI** will be disabled by default,
+.. code::
+
+    HOSTNAME=
+    ZONENAME=
+    TIMEZONE=
+    SUBNET=
+    MASK=
+
+**Note:**
+ * IF you change the default ``lan`` subnet address, expect the script not
+   to exit cleanly as networking will be interrupted. Restart your system's
+   networking to get a new IP address and log back into the router again.
+
+ * ``luci-ssl`` is default, standard HTTP service is removed completely.
+
+ * For additional safety, the ``luci-ssl`` **Web-UI** is disabled by default,
    it won't even start after reboot.
 
    To re-enable and/or restart:
@@ -82,24 +101,53 @@ Initial config, should be executed straight after install or upgrade.
 
     # cd /etc/init.d && ./uhttpd enable && ./uhttpd restart
 
+``1-openwrt-wifi.sh``
+---------------------
+
+Default 2.4Ghz and 5Ghz Wi-Fi networks that use CloudFare's DNS.
+
+**TODO**:
+Must fill the following variables:
+
+.. code::
+
+    COUNTRY=
+    CH50=
+    CH24=
+    HWMODE50=
+    HWMODE24=
+    HTMODE50=
+    HTMODE24=
+    SSID=
+    WIFISECRET50=
+    WIFISECRET24=
+
+**Note:**
+ * Script assumes different passphrase and Wi-Fi setup for 2.4Ghz and 5Ghz networks.
+
+ * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
+
+ * Examine the settings for both networks and modify them to your needs as these are
+   heavily customised for ``Linksys WRT1900AC`` router series.
+
 ``2-openwrt-unbound.sh``
 ------------------------
 
-Installs CloudFare's *DNS over TLS* service with Unbound DNS server.
+CloudFare's *DNS over TLS* service with Unbound DNS server.
 
 **Note:**
- * for sake of simplicity and compatibility, it is based on `serial dnsmasq <https://github.com/openwrt/packages/tree/master/net/unbound/files#serial-dnsmasq>`_ setup.
+ * For sake of simplicity and compatibility, it is based on `serial dnsmasq <https://github.com/openwrt/packages/tree/master/net/unbound/files#serial-dnsmasq>`_ setup.
 
- * firewall rule(s) are added to block unbound network access as ``unbound`` should
-   only be a forwarding upstream for ``dnsmasq`` on localhost.
+ * Firewall rules are added to block unbound access over the network as ``unbound``
+   should only be a forwarding upstream for ``dnsmasq`` on localhost.
 
 ``3-openwrt-guest-lan.sh``
 --------------------------
 
-Installs an isolated **Guest** Wi-Fi network (additional) that uses *OpenDNS FamilyShield* service.
+Isolated **Guest** Wi-Fi networks. (additional)
 
 **TODO**:
-you will have to edit the script prior execution and fill the following variables accordingly:
+Must fill the following variables:
 
 .. code::
 
@@ -109,12 +157,15 @@ you will have to edit the script prior execution and fill the following variable
     WIFISECRET=
 
 **Note:**
- * it is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
- * firewall rule(s) are added to prevent savvy user(s) trying to bypass DNS service.
- * firewall rule(s) are added to block forwarded traffic to RFC1918 private subnets
-   over the wan interface. this is to support setups where the openwrt router is
-   connected to ISP Modem/Router. (double-nat)
- * network services are limited to the following ports by default:
+ * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
+
+ * Firewall rules are added to prevent savvy user trying to bypass DNS service.
+
+ * Firewall rules are added to block forwarded traffic to RFC1918 private subnets
+   over the wan interface. This is to support setups where the OpenWrt router is
+   connected to ISP Modem/Router over private link. (double-nat)
+
+ * Network services are limited to the following ports by default:
 
 .. code::
 
@@ -130,11 +181,11 @@ you will have to edit the script prior execution and fill the following variable
 ``4-openwrt-kids-lan.sh``
 -------------------------
 
-Installs an isolated **Kids** Wi-Fi network (additional) with parental control that uses
-*OpenDNS Home Internet Security* service.
+Isolated **Kids** Wi-Fi network (additional) with parental control by
+*OpenDNS Home Internet Security* service. (default)
 
 **TODO**:
-you will have to edit the script prior execution and fill the following variables accordingly:
+Must fill the following variables:
 
 .. code::
 
@@ -144,17 +195,33 @@ you will have to edit the script prior execution and fill the following variable
     WIFISECRET=
 
 **Note:**
- * it is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
- * by default, this DNS is wide open hence you need an OpenDNS account, to be able to
+ * DO NOT skip EDUCATING your kids, this solution just helps to use the Internet safely.
+
+ * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz on your network.
+
+ * By default, this DNS is wide open hence you need an OpenDNS account, to be able to
    customise what the DNS filters.
- * once you have an account, you can create network(s) (like IPs, subnets, etc) and setup
-   what categories are allowed or blocked for each network. you can have multiple networks
-   for a single account, like HOME, OFFICE, etc. each network is identified by a *label*
- * firewall rule(s) are added to prevent savvy user(s) trying to bypass DNS service
- * firewall rule(s) are added to block forwarded traffic to RFC1918 private subnets
-   over the wan interface. this is to support setups where the openwrt router is
-   connected to ISP Modem/Router. (double-nat)
- * network services are limited to the following ports by default:
+
+ * Once you have an account, you can create networks like IPs, subnets, etc. and setup
+   what categories are allowed or blocked for each network. You can have multiple networks
+   for a single account like HOME, OFFICE, etc.
+
+ * Networks are identified by a **label**
+
+ * Firewall rules are added to prevent savvy user trying to bypass DNS service.
+
+ * Firewall rules are added to block forwarded traffic to RFC1918 private subnets
+   over the wan interface. This is to support setups where the OpenWrt router is
+   connected to ISP Modem/Router over private link. (double-nat)
+
+ * There will be certificate warnings about accessing HTTPS websites which are normal,
+   fix is available here: `*.opendns.com Certificate errors - Adding Exceptions <https://support.opendns.com/hc/en-us/articles/227988767--opendns-com-Certificate-errors-Adding-Exceptions>`_
+
+ * `OpenDNS FamilyShield <https://support.opendns.com/hc/en-us/articles/228006487-FamilyShield-Router-Configurationnstructions>`_
+
+ * `OpenDNS Home Free <https://www.opendns.com/home-internet-security/>`_
+
+ * Network services are limited to the following ports by default:
 
 .. code::
 
@@ -170,13 +237,17 @@ you will have to edit the script prior execution and fill the following variable
 ``5-openwrt-opendns.sh``
 ------------------------
 
-Installs OpenDNS DDNS service to update the IP address for the given network label (service).
+OpenDNS DDNS service to update the IP address for the given network label (service).
 
 **TODO**:
-you will have to edit the script prior execution and fill the following variables accordingly:
+Must fill the following variables:
 
 .. code::
 
     DDNS_USER=
     DDNS_PASS=
     DDNS_LABEL=
+
+**Note:**
+ * Errors like ``WARN : Service section disabled! - TERMINATE`` are normal, the default ``ddns``
+   config is responsible for this. This should disappear after the script is run.
