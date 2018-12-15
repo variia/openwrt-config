@@ -69,4 +69,6 @@ uci batch <<EOF
   set wireless.${NETWORKID}_radio1.isolate='0'
 EOF
 
-uci commit && cd /etc/init.d && ./network restart && ./firewall reload
+uci commit && cd /etc/init.d && \
+./network restart && \
+./firewall reload
