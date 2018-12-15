@@ -93,27 +93,27 @@ uci batch <<EOF
   set firewall.${FIREWALLZONE}_dhcp.dest_port=67-68
   set firewall.${FIREWALLZONE}_dhcp.target=ACCEPT
 
-  delete firewall.${FIREWALLZONE}_odns1
+  delete firewall.${FIREWALLZONE}_dns1
 
-  set firewall.${FIREWALLZONE}_odns1=rule
-  set firewall.${FIREWALLZONE}_odns1.name=Allow-${NETWORKID}-DNS-1
-  set firewall.${FIREWALLZONE}_odns1.proto='tcpudp'
-  set firewall.${FIREWALLZONE}_odns1.src=${NETWORKID}
-  set firewall.${FIREWALLZONE}_odns1.dest=wan
-  set firewall.${FIREWALLZONE}_odns1.dest_ip=${DNS1}
-  set firewall.${FIREWALLZONE}_odns1.dest_port=53
-  set firewall.${FIREWALLZONE}_odns1.target=ACCEPT
+  set firewall.${FIREWALLZONE}_dns1=rule
+  set firewall.${FIREWALLZONE}_dns1.name=Allow-${NETWORKID}-DNS-1
+  set firewall.${FIREWALLZONE}_dns1.proto='tcpudp'
+  set firewall.${FIREWALLZONE}_dns1.src=${NETWORKID}
+  set firewall.${FIREWALLZONE}_dns1.dest=wan
+  set firewall.${FIREWALLZONE}_dns1.dest_ip=${DNS1}
+  set firewall.${FIREWALLZONE}_dns1.dest_port=53
+  set firewall.${FIREWALLZONE}_dns1.target=ACCEPT
 
-  delete firewall.${FIREWALLZONE}_odns2
+  delete firewall.${FIREWALLZONE}_dns2
 
-  set firewall.${FIREWALLZONE}_odns2=rule
-  set firewall.${FIREWALLZONE}_odns2.name=Allow-${NETWORKID}-DNS-2
-  set firewall.${FIREWALLZONE}_odns2.proto='tcpudp'
-  set firewall.${FIREWALLZONE}_odns2.src=${NETWORKID}
-  set firewall.${FIREWALLZONE}_odns2.dest=wan
-  set firewall.${FIREWALLZONE}_odns2.dest_ip=${DNS2}
-  set firewall.${FIREWALLZONE}_odns2.dest_port=53
-  set firewall.${FIREWALLZONE}_odns2.target=ACCEPT
+  set firewall.${FIREWALLZONE}_dns2=rule
+  set firewall.${FIREWALLZONE}_dns2.name=Allow-${NETWORKID}-DNS-2
+  set firewall.${FIREWALLZONE}_dns2.proto='tcpudp'
+  set firewall.${FIREWALLZONE}_dns2.src=${NETWORKID}
+  set firewall.${FIREWALLZONE}_dns2.dest=wan
+  set firewall.${FIREWALLZONE}_dns2.dest_ip=${DNS2}
+  set firewall.${FIREWALLZONE}_dns2.dest_port=53
+  set firewall.${FIREWALLZONE}_dns2.target=ACCEPT
 
   delete firewall.${FIREWALLZONE}_fwd_out
 
