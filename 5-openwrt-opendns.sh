@@ -39,4 +39,5 @@ uci batch <<EOF
   set ddns.opendns_ipv4.ip_url=${IP_URL}
 EOF
 
-uci commit ddns && cd /etc/init.d && ./ddns enable && ./ddns restart
+uci commit ddns && cd /etc/init.d && \
+./ddns enable && ./ddns restart
