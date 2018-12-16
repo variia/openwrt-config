@@ -139,7 +139,7 @@ Must fill the following variables:
    Again, setting these to specifics like ``11g`` for 2.4Ghz and ``11a`` for 5Ghz will give you better
    performance, but these may not work with all devices. (especially if old)
 
- * ``HTMODE50/HTMODE24`` are ` channel width in 802.11n and 802.11ac mode <https://openwrt.org/docs/guide-user/network/wifi/basic>`_ , and very much depend on your hardware.
+ * ``HTMODE50/HTMODE24`` are `channel width in 802.11n and 802.11ac mode <https://openwrt.org/docs/guide-user/network/wifi/basic>`_ , and very much depend on your hardware.
 
  * ``WIFISECRET50/WIFISECRET24`` define different passphrase for 2.4Ghz and 5Ghz networks.
 
@@ -236,8 +236,7 @@ Must fill the following variables:
    over the wan interface. This is to support setups where the OpenWrt router is
    connected to ISP Modem/Router over private link. (double-nat)
 
- * There will be certificate warnings about accessing HTTPS websites which are normal,
-   fix is available here: `*.opendns.com Certificate errors - Adding Exceptions <https://support.opendns.com/hc/en-us/articles/227988767--opendns-com-Certificate-errors-Adding-Exceptions>`_
+ * There will be `*.opendns.com Certificate errors <https://support.opendns.com/hc/en-us/articles/227988767--opendns-com-Certificate-errors-Adding-Exceptions>`_ about accessing HTTPS websites which are normal, follow instructions for a fix.
 
  * `OpenDNS FamilyShield <https://support.opendns.com/hc/en-us/articles/228006487-FamilyShield-Router-Configurationnstructions>`_
 
