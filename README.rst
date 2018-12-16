@@ -54,6 +54,11 @@ router as they need to run locally on the device.
 The scripts are numbered to indicate order of importance as well as dependency.
 Some of them rely on settings already in place and/or loaded by another script.
 
+The ``SUBNET`` variable is actually an IP address of a subnet you want to assign to
+the router. The ``MASK`` is, what will define the subnet length and the available
+addresses in it, which will be served by the router. While I understand, that it is a
+bit confusing, I thought it is better than any other I could come up with at the time.
+
 The scripts are not executable on purpose, you can always pass them as shell arguments:
 
 .. code::
@@ -86,6 +91,8 @@ Must fill the following variables:
     MASK=
 
 **Note:**
+ * ``ZONENAME/TIMEZONE`` are for `NTP <https://openwrt.org/docs/guide-user/base-system/system_configuration>`_ .
+
  * IF you change the default ``lan`` subnet address, expect the script not
    to exit cleanly as networking will be interrupted. Restart your system's
    networking to get a new IP address and log back into the router again.
@@ -123,7 +130,18 @@ Must fill the following variables:
     WIFISECRET24=
 
 **Note:**
- * Script assumes different passphrase and Wi-Fi setup for 2.4Ghz and 5Ghz networks.
+ * ``COUNTRY`` is your `regulatory domain <https://openwrt.org/docs/guide-user/network/wifi/wifi_countrycode>`_ .
+
+ * ``CH50/CH24`` preferred channel for 2.4Ghz and 5Ghz. These depend on you regulatory domain (COUNTRY)
+   and the area you are in. I found OpenWrt routers perform much better on manual channels than on ``auto``.
+
+ * ``HWMODE50/HWMODE24`` are `router AP modes <https://openwrt.org/docs/guide-user/network/wifi/basic>`_ .
+   Again, setting these to specifics like ``11g`` for 2.4Ghz and ``11a`` for 5Ghz will give you better
+   performance, but these may not work with all devices. (especially if old)
+
+ * ``HTMODE50/HTMODE24`` are ` channel width in 802.11n and 802.11ac mode <https://openwrt.org/docs/guide-user/network/wifi/basic>`_ , and very much depend on your hardware.
+
+ * ``WIFISECRET50/WIFISECRET24`` define different passphrase for 2.4Ghz and 5Ghz networks.
 
  * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
 
@@ -157,6 +175,8 @@ Must fill the following variables:
     WIFISECRET=
 
 **Note:**
+ * ``WIFISECRET`` define the same passphrase for both, 2.4Ghz and 5Ghz networks.
+
  * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz network.
 
  * Firewall rules are added to prevent savvy user trying to bypass DNS service.
@@ -196,6 +216,8 @@ Must fill the following variables:
 
 **Note:**
  * DO NOT skip EDUCATING your kids, this solution just helps to use the Internet safely.
+
+ * ``WIFISECRET`` define the same passphrase for both, 2.4Ghz and 5Ghz networks.
 
  * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz on your network.
 
@@ -249,5 +271,10 @@ Must fill the following variables:
     DDNS_LABEL=
 
 **Note:**
+ * ``DDNS_USER/DDNS_PASS`` are your OpenDNS account credentials, the same you use to log in
+   to your account over the web.
+
+ * ``DDNS_LABEL`` identifies your network within your OpenDNS account.
+
  * Errors like ``WARN : Service section disabled! - TERMINATE`` are normal, the default ``ddns``
    config is responsible for this. This should disappear after the script is run.
