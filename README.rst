@@ -8,8 +8,8 @@ Features
 ========
 * Hardened for additional security
 * Privacy focused DNS from `CloudFare <https://blog.cloudflare.com/dns-over-tls-for-openwrt>`_
-* Isolated Guest Wi-Fi LAN
-* Isolated Kids Wi-Fi LAN with parental control by OpenDNS (account required)
+* Isolated Guest Wi-Fi LAN with filtered DNS
+* Isolated Kids Wi-Fi LAN with parental control
 * OpenDNS DDNS support for dynamic IPs
 
 Prerequisites
@@ -162,7 +162,10 @@ CloudFare's *DNS over TLS* service with Unbound DNS server.
 ``3-openwrt-guest-lan.sh``
 --------------------------
 
-Isolated **Guest** Wi-Fi networks. (additional)
+Isolated **Guest** Wi-Fi network (additional) with filtered DNS by
+* *Google DNS* security filter only
+* *Quad9 DNS* security filter only
+* *CleanBrowsing DNS* security filter only (default)
 
 **TODO**:
 Must fill the following variables:
@@ -202,7 +205,10 @@ Must fill the following variables:
 -------------------------
 
 Isolated **Kids** Wi-Fi network (additional) with parental control by
-*OpenDNS Home Internet Security* service. (default)
+* *OpenDNS FamilyShield* adult filter only
+* *OpenDNS Home Internet Security* customisable filter
+* *CleanBrowsing Adult Filter* adult filter only
+* *CleanBrowsing Family Filter* security, adult, mixed content, etc (default)
 
 **TODO**:
 Must fill the following variables:
@@ -221,10 +227,13 @@ Must fill the following variables:
 
  * It is assumed that ``radio0`` is 5Ghz and ``radio1`` is 2.4Ghz on your network.
 
- * By default, this DNS is wide open hence you need an OpenDNS account, to be able to
-   customise what the DNS filters.
+ * *CleanBrowsing Family Filter* does the most out of the box, hence it is the default.
 
- * Once you have an account, you can create networks like IPs, subnets, etc. and setup
+ * By default, the *OpenDNS Home Internet Security* is wide open, hence you need an OpenDNS
+   account to be able to customise what the DNS filters. DO NOT use this default unless
+   you plan to manually manage DNS filtering.
+
+ * Once you have an OpenDNS account, you can create networks like IPs, subnets, etc. and setup
    what categories are allowed or blocked for each network. You can have multiple networks
    for a single account like HOME, OFFICE, etc.
 
@@ -241,6 +250,8 @@ Must fill the following variables:
  * `OpenDNS FamilyShield <https://support.opendns.com/hc/en-us/articles/228006487-FamilyShield-Router-Configurationnstructions>`_
 
  * `OpenDNS Home Free <https://www.opendns.com/home-internet-security/>`_
+
+ * `CleanBrowsing Family Filter <https://cleanbrowsing.org/filters/>`_
 
  * Network services are limited to the following ports by default:
 
