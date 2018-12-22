@@ -163,8 +163,11 @@ CloudFare's *DNS over TLS* service with Unbound DNS server.
 --------------------------
 
 Isolated **Guest** Wi-Fi network (additional) with filtered DNS by
+
 * *Google DNS* security filter only
+
 * *Quad9 DNS* security filter only
+
 * *CleanBrowsing DNS* security filter only (default)
 
 **TODO**:
@@ -205,9 +208,13 @@ Must fill the following variables:
 -------------------------
 
 Isolated **Kids** Wi-Fi network (additional) with parental control by
+
 * *OpenDNS FamilyShield* adult filter only
+
 * *OpenDNS Home Internet Security* customisable filter
+
 * *CleanBrowsing Adult Filter* adult filter only
+
 * *CleanBrowsing Family Filter* security, adult, mixed content, etc (default)
 
 **TODO**:
