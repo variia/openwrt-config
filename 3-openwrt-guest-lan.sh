@@ -1,9 +1,23 @@
 # https://openwrt.org/docs/guide-user/network/wifi/guestwifi/configuration
 # https://openwrt.org/docs/guide-user/network/wifi/guestwifi/guest-wlan
 
-# free service from Google
-DNS1="8.8.4.4"
-DNS2="8.8.8.8"
+# free (malicious domain free) service from Google
+GOOGLE1="8.8.4.4"
+GOOGLE2="8.8.8.8"
+
+# free Quad9 (malicious domain free) DNS service
+# https://www.quad9.net/faq
+QUAD1="9.9.9.9"
+QUAD2="149.112.112.112"
+
+# free CleanBrowsing (malicious domain free) DNS service
+# https://cleanbrowsing.org/filters
+CLEANBROWSING1="185.228.168.9"
+CLEANBROWSING2="185.228.169.9"
+
+# default DNS
+DNS1="${CLEANBROWSING1}"
+DNS2="${CLEANBROWSING2}"
 
 # guest zone
 NETWORKID=guest
