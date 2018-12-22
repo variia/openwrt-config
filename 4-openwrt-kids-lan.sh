@@ -9,9 +9,19 @@ ODNS_FAMILYSHIELD2="208.67.220.123"
 ODNS_HOMEFREE1="208.67.222.222"
 ODNS_HOMEFREE2="208.67.220.220"
 
+# free CleanBrowsing (Adult Filter) DNS service (no config required, just set and go)
+# https://cleanbrowsing.org/filters
+CB_ADULTFILTER1="185.228.168.10"
+CB_ADULTFILTER2="185.228.169.11"
+
+# free CleanBrowsing (Family Filter) DNS service (no config required, just set and go)
+# https://cleanbrowsing.org/filters
+CB_FAMILYFILTER1="185.228.168.168"
+CB_FAMILYFILTER2="185.228.169.168"
+
 # default DNS
-DNS1="${ODNS_HOMEFREE1}"
-DNS2="${ODNS_HOMEFREE2}"
+DNS1="${CB_FAMILYFILTER1}"
+DNS2="${CB_FAMILYFILTER2}"
 
 # kids zone
 NETWORKID=kid
