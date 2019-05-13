@@ -89,6 +89,8 @@ Must fill the following variables:
     TIMEZONE=
     SUBNET=
     MASK=
+    PPPOEUSER=
+    PPPOEPASS=
 
 **Note:**
  * ``ZONENAME/TIMEZONE`` are for `NTP <https://openwrt.org/docs/guide-user/base-system/system_configuration>`_ .

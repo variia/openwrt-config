@@ -8,6 +8,8 @@ ZONENAME=
 TIMEZONE=
 SUBNET=
 MASK=
+PPPOEUSER=
+PPPOEPASS=
 
 opkg update
 
@@ -22,7 +24,9 @@ uci batch <<EOF
   set network.lan.ipaddr=${SUBNET}
   set network.lan.netmask=${MASK}
 
-  set network.wan.proto='dhcp'
+  set network.wan.proto='pppoe'
+  set network.wan.username=${PPPOEUSER}
+  set network.wan.password=${PPPOEPASS}
 
   delete uhttpd.main.listen_http
 
