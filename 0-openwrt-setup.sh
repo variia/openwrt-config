@@ -27,6 +27,9 @@ uci batch <<EOF
   set network.wan.proto='pppoe'
   set network.wan.username=${PPPOEUSER}
   set network.wan.password=${PPPOEPASS}
+  set network.wan.keepalive='5 5'
+  set network.wan.persist='1'
+  set network.wan.holdoff='5'
 
   delete uhttpd.main.listen_http
 
