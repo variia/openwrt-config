@@ -27,9 +27,10 @@ uci batch <<EOF
   set network.wan.proto='pppoe'
   set network.wan.username=${PPPOEUSER}
   set network.wan.password=${PPPOEPASS}
-  set network.wan.keepalive='5 5'
+  set network.wan.keepalive='50 20'
   set network.wan.persist='1'
   set network.wan.holdoff='5'
+  set network.wan.pppd_options='debug noipdefault'
 
   delete uhttpd.main.listen_http
 
@@ -52,6 +53,8 @@ uci batch <<EOF
   set dhcp.@dnsmasq[0].dnsforwardmax='1000'
   set dhcp.@dnsmasq[0].nohosts='1'
   set dhcp.@dnsmasq[0].noresolv='1'
+
+  set dhcp.lan.ra_default='1'
 EOF
 
 uci commit && cd /etc/init.d && \

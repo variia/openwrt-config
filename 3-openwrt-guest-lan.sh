@@ -50,6 +50,7 @@ uci batch <<EOF
   set dhcp.${NETWORKID}.leasetime=2h
   set dhcp.${NETWORKID}.dhcpv6=server
   set dhcp.${NETWORKID}.ra=server
+  set dhcp.${NETWORKID}.ra_default='1'
   add_list dhcp.${NETWORKID}.dhcp_option="6,${DNS1}"
   add_list dhcp.${NETWORKID}.dhcp_option="6,${DNS2}"
 
