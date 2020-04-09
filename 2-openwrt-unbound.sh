@@ -9,7 +9,7 @@ UNBOUND_PORT=5353
 
 opkg update
 
-test -n "$(opkg list-installed unbound)" || opkg install unbound
+test -n "$(opkg list-installed unbound-daemon-heavy)" || opkg install unbound-daemon-heavy
 test -n "$(opkg list-installed luci-app-unbound)" || opkg install luci-app-unbound
 
 # remove all config except default headers
