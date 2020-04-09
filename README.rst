@@ -28,6 +28,7 @@ Prerequisites
 .. code:: yaml
 
     tested:
+      - OpenWrt 19.07.2, r10947-65030d81f3
       - OpenWrt 18.06.1, r7258-5eb055306f
       - LEDE Reboot 17.01.4, r3560-79f57e422d
 
@@ -297,3 +298,31 @@ Must fill the following variables:
 
  * Errors like ``WARN : Service section disabled! - TERMINATE`` are normal, the default ``ddns``
    config is responsible for this. This should disappear after the script is run.
+
+``6-openwrt-samsungTv-fix.sh``
+------------------------------
+
+DHCP static lease config for Samsung TV. This fix basically sets static IP address for given MAC
+address and additionally, forces this client only to use Google DNS servers.
+
+I have no specific background information on this. I use HBO GO and for some reason, using the
+default Cloudfare DNS servers by the TV, the content playing stops with bogous error. This
+is not intermittent, when it happens it is very much permanent. Some suggested this is because
+some DNS providers block (don't return address) for HBO DRM servers at times. Or this maybe related
+to some sort of geo location based answer which depends on client request.
+
+I personally prefer Cloudfare's privacy focused DNS, so I use it on all my devices without issues.
+Only this TV and this service needs Google DNS, hence I require this custom lease config.
+
+**TODO**:
+Must fill the following variables:
+
+.. code::
+
+    MAC=
+    IPADDR=
+
+**Note:**
+ * ``MAC`` the MAC address of your Samsung TV.
+
+ * ``IPADDR`` desired address for your Samsung TV.
